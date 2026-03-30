@@ -1,0 +1,104 @@
+CRIAR UMA PASTA
+CRIAR UM ARQUIVO
+-> Dockerfile
+
+dockerhub no google
+pequisar por nginx
+
+no vs code
+FROM nginx
+COPY . /usr/share/nginx/html
+
+no terminal
+docker      
+docker build -t meunginx .
+docker run --name meunginx1 -d -p 8080:80 meunginx    
+docker ps
+http://localhost:8080/
+
+na pasta cria um index.html
+html:5
+<h1>Olá, Saquarema</h1>
+
+
+para excluir um container
+docker rm meunginx1
+para forçar ele a parar
+docker stop meunginx1
+
+primeiro tem que forçar parar para depois excluir
+
+
+dps rodar novamente
+docker run --name meunginx1 -d -p 8080:80 meunginx
+
+
+
+
+Aula3
+
+docker-compose
+cria um file: docker-compose.yml
+
+services:
+  apache:
+    image: httpd:latest
+    ports:
+      - "8080:80"
+
+  nginx:
+    image: nginx:latest           (o "image: nginx:latest" se usar "build: ."    ele procura um dockerfile) 
+    ports:
+      - "8081:80"    
+
+
+
+Esses 2 serviços seria o mesmo se fizesse
+docker run --name nginx -d -p 8081:80 nginx
+docker run --name apache -d -p 8080:80 httpd
+
+para rodar esse serviço:
+docker-compose up -d
+
+docker ps
+(verifica)
+
+
+docker-compose down
+docker-compose up -d
+
+
+docker run --name nginx2 -d -p 8082:80 nginx
+
+
+add um volume (um caminho)
+
+services:
+  apache:
+    image: httpd:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/usr/local/apache2/htdocs
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8081:80"
+    volumes:
+      - .:/usr/share/nginx/html
+
+
+docker exec -it nomedocontainer bash
+exemplo da minha aula que foi a 3, ficou assim
+docker exec -it aula3-nginx-1 bash
+entramos no root e vamos executar comandos linux nele
+ls
+cd usr/share/nginx/nginx/html
+apt-get update ???
+cat docker-compose  ???
+
+
+
+no container
+curl -v http://aula3-apache-1
